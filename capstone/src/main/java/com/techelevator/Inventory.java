@@ -29,17 +29,32 @@ public class Inventory {
         }
     }
     public String printItems(){
+        int length = 0;
+        int largestSpaceLength = 0;
+
         for(Map.Entry<String, Item> entry : inventory.entrySet()){
+            String totalString = entry.getKey() + entry.getValue().getName() + entry.getValue().getPrice().toString();
+            if (totalString.length() > length)
+            length = totalString.length();
+            largestSpaceLength = length + 1;
+        }
+        for(Map.Entry<String, Item> entry : inventory.entrySet()){
+            String totalString = entry.getKey() + entry.getValue().getName() + entry.getValue().getPrice().toString();
+            int spaceLength = largestSpaceLength - totalString.length();
+            StringBuilder spacing = new StringBuilder();
+            for (int i = 0 ; i < spaceLength ; i++){
+               spacing.append(" ");
+           }
             if(entry.getValue().getQuantity() > 0) {
                 System.out.println(entry.getKey().toString() + " " +
                         entry.getValue().getName().toString() + " " +
-                        entry.getValue().getPrice() + " " +
-                        entry.getValue().getQuantity()
+                        entry.getValue().getPrice() + spacing.toString() +
+                        entry.getValue().getQuantity() + " Avalible"
                 );
             } else {
                 System.out.println(entry.getKey().toString() + " " +
-                        entry.getValue().getName().toString() + " " +
-                        entry.getValue().getPrice() + " " +
+                        entry.getValue().getName().toString() + spacing.toString() +
+                        entry.getValue().getPrice() + spacing.toString() +
                         "SOLD OUT"
                 );
             }
