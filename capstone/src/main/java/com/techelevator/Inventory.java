@@ -4,6 +4,7 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class Inventory {
                 if (VendWallet.getBalance().doubleValue() > inventory.get(inputKey).getPrice().doubleValue()) {
                     if (inventory.get(inputKey).getQuantity() > 0) {
                         double tempAmount = VendWallet.balance.doubleValue() - inventory.get(inputKey).getPrice().doubleValue();
-                        wallet.setBalance(BigDecimal.valueOf(tempAmount));
+                        wallet.setBalance(BigDecimal.valueOf(tempAmount).setScale(2, RoundingMode.HALF_DOWN));
                         inventory.get(inputKey).setQuantity(inventory.get(inputKey).getQuantity() - 1);
                         System.out.println(vendSound(inputKey));
                         prosess = false;

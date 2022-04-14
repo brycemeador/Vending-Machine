@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.util.Scanner;
 
 public class VendWallet {
-    static BigDecimal balance = new BigDecimal(0).setScale(2, RoundingMode.DOWN);
+    static BigDecimal balance = new BigDecimal(0).setScale(2, RoundingMode.HALF_DOWN);
 
     public void feedMoney() {
         System.out.println("Please feed in whole dollar amounts! example, $1, $2, $5, or $10.");
@@ -27,17 +27,19 @@ public class VendWallet {
         int tempAmount2 = tempAmount % 10;
         int nickles = tempAmount2 / 5;
         int tempAmount3 = tempAmount2 % 5;
-
-        setBalance(BigDecimal.valueOf(tempAmount3).setScale(2, RoundingMode.DOWN));
+        setBalance(BigDecimal.valueOf((double) tempAmount3).setScale(2, RoundingMode.HALF_DOWN));
 
         System.out.println("Transaction completed you receive your balance of " +
                 amount + " Quarters dispensed " + quarters +
                 " Dimes dispensed " + dimes + "Nickles dispensed " + nickles);
 
     }
+    public void updateBalance(){
+
+    }
 
     public void setBalance(BigDecimal balance) {
-        VendWallet.balance = balance.setScale(2, RoundingMode.FLOOR);
+        VendWallet.balance = balance.setScale(2,RoundingMode.HALF_DOWN);
     }
 
     public static BigDecimal getBalance() {
