@@ -1,5 +1,7 @@
 package com.techelevator.view;
 
+import com.techelevator.VendWallet;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -50,6 +52,25 @@ public class Menu {
 		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 	}
+	public Object getChoiceFromOptionsWithBalance(Object[] options) {
+// custom method for purchase screen
+		Object choice = null;
+		while (choice == null) {
+			displayMenuOptionsWithBalance(options);
+			choice = getChoiceFromUserInput(options);
 
-
+		}
+		return choice;
+	}
+	private void displayMenuOptionsWithBalance(Object[] options) {
+		// custom method that gets called by getChoiceFromOptionsWithBalance
+		out.println();
+		for (int i = 0; i < options.length; i++) {
+			int optionNum = i + 1;
+			out.println(optionNum + ") " + options[i]);
+		}
+		out.println("Current Money Provided: $" + VendWallet.getBalance());
+		out.print(System.lineSeparator() + "Please choose an option >>> ");
+		out.flush();
+	}
 }
