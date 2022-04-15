@@ -28,24 +28,25 @@ public class Inventory {
             System.out.println("File does not exists");
         }
     }
-    public String printItems(){
+
+    public String printItems() {
         int length = 0;
         int largestSpaceLength = 0;
 
-        for(Map.Entry<String, Item> entry : inventory.entrySet()){
+        for (Map.Entry<String, Item> entry : inventory.entrySet()) {
             String totalString = entry.getKey() + entry.getValue().getName() + entry.getValue().getPrice().toString();
             if (totalString.length() > length)
-            length = totalString.length();
+                length = totalString.length();
             largestSpaceLength = length + 1;
         }
-        for(Map.Entry<String, Item> entry : inventory.entrySet()){
+        for (Map.Entry<String, Item> entry : inventory.entrySet()) {
             String totalString = entry.getKey() + entry.getValue().getName() + entry.getValue().getPrice().toString();
             int spaceLength = largestSpaceLength - totalString.length();
             StringBuilder spacing = new StringBuilder();
-            for (int i = 0 ; i < spaceLength ; i++){
-               spacing.append(" ");
-           }
-            if(entry.getValue().getQuantity() > 0) {
+            for (int i = 0; i < spaceLength; i++) {
+                spacing.append(" ");
+            }
+            if (entry.getValue().getQuantity() > 0) {
                 System.out.println(entry.getKey().toString() + " " +
                         entry.getValue().getName().toString() + " " +
                         entry.getValue().getPrice() + spacing.toString() +
@@ -61,62 +62,57 @@ public class Inventory {
         }
         return "";
     }
-    public void vendItem(String inputKey){
-        VendWallet wallet = new VendWallet();
-        Boolean prosess = true;
-        while(prosess)
-            if(inventory.containsKey(inputKey)) {
-                if (VendWallet.getBalance().doubleValue() > inventory.get(inputKey).getPrice().doubleValue()) {
-                    if (inventory.get(inputKey).getQuantity() > 0) {
-                        double tempAmount = VendWallet.balance.doubleValue() - inventory.get(inputKey).getPrice().doubleValue();
-                        wallet.setBalance(BigDecimal.valueOf(tempAmount).setScale(2, RoundingMode.HALF_DOWN));
-                        inventory.get(inputKey).setQuantity(inventory.get(inputKey).getQuantity() - 1);
-                        System.out.println(vendSound(inputKey));
-                        prosess = false;
-                    }
+    public String vendItem(String inputKey) {
+        try {
+             while (true) {
+                VendWallet wallet = new VendWallet();
+                SalesLog sales = new SalesLog();
+                if (inventory.containsKey(inputKey) && VendWallet.getBalance().doubleValue() >
+                        inventory.get(inputKey).getPrice().doubleValue() && inventory.get(inputKey).getQuantity() > 0) {
+                            double tempAmount = VendWallet.balance.doubleValue() - inventory.get(inputKey).getPrice().doubleValue();
+                            wallet.setBalance(BigDecimal.valueOf(tempAmount).setScale(2, RoundingMode.HALF_DOWN));
+                            inventory.get(inputKey).setQuantity(inventory.get(inputKey).getQuantity() - 1);
+                            System.out.println(vendSound(inputKey));
+                            break;
+                } else if (inventory.get(inputKey).getQuantity() == 0) {
+                    System.out.println("Item is sold out!");
+                    break;
+                } else if (VendWallet.getBalance().doubleValue() < inventory.get(inputKey).getPrice().doubleValue()) {
+                    System.out.println("Insufficient balance please feed money!");
+                    break;
+                } else if (!(inventory.containsKey(inputKey))) {
+                    System.out.println("Invalid item code!");
+                    break;
                 }
+              }
+            }catch(Exception e){
+            System.out.println("Invalid item code!");
+        }
+        return "";
+    }
+        public String vendSound (String code){
+            String sound = "";
+            if (code.startsWith("A")) {
+                sound = "\nCrunch Crunch, Yum!";
+            } else if (code.startsWith("B")) {
+                sound = "\nMunch Munch, Yum!";
+            } else if (code.startsWith("C")) {
+                sound = "\nGlug Glug, Yum!";
+            } else if (code.startsWith("D")) {
+                sound = "\nChew Chew, Yum!";
             }
-    }
-    public String vendSound(String code){
-        String sound = "";
-        if (code.startsWith("A")){
-            sound = "Crunch Crunch, Yum!";
+            return sound;
         }
-        else if (code.startsWith("B")){
-            sound = "Munch Munch, Yum!";
+        public Map<String, Item> getInventory () {
+            return inventory;
         }
-        else if (code.startsWith("C")){
-            sound = "Glug Glug, Yum!";
+
+        public void setInventory (Map < String, Item > inventory){
+            this.inventory = inventory;
         }
-        else if (code.startsWith("D")){
-            sound = "Chew Chew, Yum!";
-        }
-        return sound;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public Map<String, Item> getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Map<String, Item> inventory) {
-        this.inventory = inventory;
-    }
-}
 
 
 

@@ -7,18 +7,22 @@ import java.util.Scanner;
 public class VendWallet {
     static BigDecimal balance = new BigDecimal(0).setScale(2, RoundingMode.HALF_DOWN);
 
-    public void feedMoney() {
-        System.out.println("Please feed in whole dollar amounts! example, $1, $2, $5, or $10.");
-        Scanner input = new Scanner(System.in);
-        double num = Double.parseDouble(input.nextLine());
-        if (num % 1 == 0) {
-            setBalance(balance.add(BigDecimal.valueOf(num)));
-        } else {
-            System.out.println("Invalid entry please put in whole dolor amount!");
-
+    public BigDecimal feedMoney() {
+        BigDecimal previousBalance = getBalance();
+        try {
+            System.out.println("Please feed in whole dollar amounts! example, $1, $2, $5, or $10.");
+            Scanner input = new Scanner(System.in);
+            double num = Double.parseDouble(input.nextLine());
+            if (num % 1 == 0) {
+                setBalance(balance.add(BigDecimal.valueOf(num)));
+            } else {
+                System.out.println("Invalid entry please put in whole dolor amount!");
+            }
+        } catch (Exception e){
+            System.out.println("Invalid input!");
         }
+        return previousBalance;
     }
-
     public void balanceToZero(BigDecimal amount) {
         double convert = amount.doubleValue() * 100;
         int quarters = (int) (convert / 25);
