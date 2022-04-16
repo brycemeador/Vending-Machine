@@ -42,29 +42,33 @@ public class VendingMachineCLI {
 
 						BigDecimal moneyFed = vendWallet.feedMoney();
 						//logs FEED MONEY, amount of money added, total balance.
-						sales.log("FEED MONEY:", moneyFed, VendWallet.getBalance());
-
+						if ((moneyFed.doubleValue() > 0)) {
+							sales.log("FEED MONEY:", moneyFed, VendWallet.getBalance());
+						}
 					} else if (prosesChoice.equals(FINISH_TRANSACTION)){
 						BigDecimal vwBalance = VendWallet.getBalance();
 						vendWallet.balanceToZero(VendWallet.getBalance());
                         //logs GIVE CHANGE, balance before change, balance after change is given.
-						sales.log("GIVE CHANGE:", vwBalance, VendWallet.getBalance());
+						if ((vwBalance.doubleValue() > 0)){
+							sales.log("GIVE CHANGE:", vwBalance, VendWallet.getBalance());
+						}
 						break;
 					} else if (prosesChoice.equals(SELECT_PRODUCT)){
 						inventory.printItems();
-						System.out.println("Please enter in the item you would like");
+						System.out.println("\nPlease enter in the item you would like");
 						Scanner input = new Scanner(System.in);
 						String inputKey = input.nextLine().toUpperCase();
 						BigDecimal vwBalance = VendWallet.getBalance();
 						inventory.vendItem(inputKey);
 
+						//logs item name, balance before purchase, balance after purchase
 						sales.log(inventory.getInventory().get(inputKey).getName(), vwBalance , VendWallet.getBalance());
 
 					}
 				}
 
 			}else if (choice.equals(MAIN_MENU_EXIT)) {
-				System.out.println("Have a nice day!");
+				System.out.println("\nHave a nice day!");
 				break;
 
 			}

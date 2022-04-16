@@ -49,7 +49,7 @@ public class Menu {
 			int optionNum = i + 1;
 			out.println(optionNum + ") " + options[i]);
 		}
-		out.print(System.lineSeparator() + "Please choose an option >>> ");
+		out.print(System.lineSeparator() + "Please choose an option >>> \n");
 		out.flush();
 	}
 	public Object getChoiceFromOptionsWithBalance(Object[] options) {
@@ -69,8 +69,8 @@ public class Menu {
 			int optionNum = i + 1;
 			out.println(optionNum + ") " + options[i]);
 		}
-		out.println("Current Money Provided: $" + VendWallet.getBalance());
-		out.print(System.lineSeparator() + "Please choose an option >>> ");
+		out.println("\nCurrent Money Provided: $" + VendWallet.getBalance());
+		out.print(System.lineSeparator() + "Please choose an option >>> \n");
 		out.flush();
 	}
 }

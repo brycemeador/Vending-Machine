@@ -14,7 +14,7 @@ public class Inventory {
     Map<String, Item> inventory = new LinkedHashMap<String, Item>();
 
     public void loadInventory() {
-        String fileName = "vendingmachine.csv";
+        String fileName = "C:\\Users\\txpar\\merit\\projects\\module-1-capstone\\capstone\\vendingmachine.csv";
         File file = new File(fileName);
         try (Scanner inputFile = new Scanner(file)) {
             while (inputFile.hasNextLine()) {
@@ -25,7 +25,7 @@ public class Inventory {
                 inventory.put(item.getCode(), item);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File does not exists");
+            System.out.println("\nFile does not exists");
         }
     }
 
@@ -50,14 +50,12 @@ public class Inventory {
                 System.out.println(entry.getKey().toString() + " " +
                         entry.getValue().getName().toString() + " " +
                         entry.getValue().getPrice() + spacing.toString() +
-                        entry.getValue().getQuantity() + " Avalible"
-                );
+                        entry.getValue().getQuantity() + " Available");
             } else {
                 System.out.println(entry.getKey().toString() + " " +
                         entry.getValue().getName().toString() + spacing.toString() +
                         entry.getValue().getPrice() + spacing.toString() +
-                        "SOLD OUT"
-                );
+                        "SOLD OUT");
             }
         }
         return "";
@@ -72,21 +70,23 @@ public class Inventory {
                             double tempAmount = VendWallet.balance.doubleValue() - inventory.get(inputKey).getPrice().doubleValue();
                             wallet.setBalance(BigDecimal.valueOf(tempAmount).setScale(2, RoundingMode.HALF_DOWN));
                             inventory.get(inputKey).setQuantity(inventory.get(inputKey).getQuantity() - 1);
-                            System.out.println(vendSound(inputKey));
+                            System.out.println("\n" + inventory.get(inputKey).getName() + " purchased, item Cost $"
+                                    + inventory.get(inputKey).getPrice() + ". Balance remaining $" +
+                                    VendWallet.getBalance() + "\n" + vendSound(inputKey));
                             break;
                 } else if (inventory.get(inputKey).getQuantity() == 0) {
-                    System.out.println("Item is sold out!");
+                    System.out.println("\nSelected item is sold out");
                     break;
                 } else if (VendWallet.getBalance().doubleValue() < inventory.get(inputKey).getPrice().doubleValue()) {
-                    System.out.println("Insufficient balance please feed money!");
+                    System.out.println("\nInsufficient balance, please feed money");
                     break;
                 } else if (!(inventory.containsKey(inputKey))) {
-                    System.out.println("Invalid item code!");
+                    System.out.println("\nPlease input valid item code");
                     break;
                 }
               }
             }catch(Exception e){
-            System.out.println("Invalid item code!");
+            System.out.println("\nPlease input valid code");
         }
         return "";
     }
