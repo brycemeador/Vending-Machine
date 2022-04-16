@@ -10,14 +10,16 @@ public class VendWallet {
     public BigDecimal feedMoney() {
         System.out.println("\nPlease feed in whole dollar amounts! Example: $1, $2, $5, or $10.");
         Scanner input = new Scanner(System.in);
-
+        while (!input.hasNextDouble()) {
+            System.out.println("\nInvalid entry please insert whole dollar amount");
+        }
         double num = Double.parseDouble(input.nextLine());
         if (num % 1 == 0 && num > 0) {
             setBalance(balance.add(BigDecimal.valueOf(num)));
             return BigDecimal.valueOf(num).setScale(2);
         }
         else {
-            System.out.println("\nInvalid entry please put insert whole dollar amount");
+            System.out.println("\nInvalid entry please insert whole dollar amount");
         }
         // Log required a null return for the method
         return BigDecimal.valueOf(0).setScale(2);
