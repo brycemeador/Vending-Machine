@@ -45,13 +45,15 @@ public class Menu {
 
 	private void displayMenuOptions(Object[] options) {
 		out.println();
-		for (int i = 0; i < options.length; i++) {
+		for (int i = 0; i < options.length - 1; i++) {
 			int optionNum = i + 1;
 			out.println(optionNum + ") " + options[i]);
 		}
-		out.print(System.lineSeparator() + "Please choose an option >>> \n");
+		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 	}
+
+
 	public Object getChoiceFromOptionsWithBalance(Object[] options) {
 // custom method for purchase screen
 		Object choice = null;
@@ -69,8 +71,8 @@ public class Menu {
 			int optionNum = i + 1;
 			out.println(optionNum + ") " + options[i]);
 		}
-		out.println("\nCurrent Money Provided: $" + VendWallet.getBalance());
-		out.print(System.lineSeparator() + "Please choose an option >>> \n");
+		out.println("Current Money Provided: $" + VendWallet.getBalance());
+		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 	}
 }

@@ -1,20 +1,18 @@
 
 package com.techelevator;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Inventory {
-    Map<String, Item> inventory = new LinkedHashMap<String, Item>();
+    static Map<String, Item> inventory = new LinkedHashMap<String, Item>();
 
     public void loadInventory() {
-        String fileName = "C:\\Users\\txpar\\merit\\projects\\module-1-capstone\\capstone\\vendingmachine.csv";
+        String fileName = "vendingmachine.csv";
         File file = new File(fileName);
         try (Scanner inputFile = new Scanner(file)) {
             while (inputFile.hasNextLine()) {
@@ -25,7 +23,7 @@ public class Inventory {
                 inventory.put(item.getCode(), item);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("\nFile does not exists");
+            System.out.println("File does not exists");
         }
     }
 
@@ -50,67 +48,88 @@ public class Inventory {
                 System.out.println(entry.getKey().toString() + " " +
                         entry.getValue().getName().toString() + " " +
                         entry.getValue().getPrice() + spacing.toString() +
-                        entry.getValue().getQuantity() + " Available");
+                        entry.getValue().getQuantity() + " Avalible"
+                );
             } else {
                 System.out.println(entry.getKey().toString() + " " +
                         entry.getValue().getName().toString() + spacing.toString() +
                         entry.getValue().getPrice() + spacing.toString() +
-                        "SOLD OUT");
+                        "SOLD OUT"
+                );
             }
         }
         return "";
     }
+
     public String vendItem(String inputKey) {
         try {
-             while (true) {
+            while (true) {
                 VendWallet wallet = new VendWallet();
                 SalesLog sales = new SalesLog();
                 if (inventory.containsKey(inputKey) && VendWallet.getBalance().doubleValue() >
                         inventory.get(inputKey).getPrice().doubleValue() && inventory.get(inputKey).getQuantity() > 0) {
-                            double tempAmount = VendWallet.balance.doubleValue() - inventory.get(inputKey).getPrice().doubleValue();
-                            wallet.setBalance(BigDecimal.valueOf(tempAmount).setScale(2, RoundingMode.HALF_DOWN));
-                            inventory.get(inputKey).setQuantity(inventory.get(inputKey).getQuantity() - 1);
-                            System.out.println("\n" + inventory.get(inputKey).getName() + " purchased, item Cost $"
-                                    + inventory.get(inputKey).getPrice() + ". Balance remaining $" +
-                                    VendWallet.getBalance() + "\n" + vendSound(inputKey));
-                            break;
+                    double tempAmount = VendWallet.balance.doubleValue() - inventory.get(inputKey).getPrice().doubleValue();
+                    wallet.setBalance(BigDecimal.valueOf(tempAmount).setScale(2, RoundingMode.HALF_DOWN));
+                    inventory.get(inputKey).setQuantity(inventory.get(inputKey).getQuantity() - 1);
+                    System.out.println(vendSound(inputKey));
+                    break;
                 } else if (inventory.get(inputKey).getQuantity() == 0) {
-                    System.out.println("\nSelected item is sold out");
+                    System.out.println("Item is sold out!");
                     break;
                 } else if (VendWallet.getBalance().doubleValue() < inventory.get(inputKey).getPrice().doubleValue()) {
-                    System.out.println("\nInsufficient balance, please feed money");
+                    System.out.println("Insufficient balance please feed money!");
                     break;
                 } else if (!(inventory.containsKey(inputKey))) {
-                    System.out.println("\nPlease input valid item code");
+                    System.out.println("Invalid item code!");
                     break;
                 }
-              }
-            }catch(Exception e){
-            System.out.println("\nPlease input valid code");
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid item code!");
         }
         return "";
     }
-        public String vendSound (String code){
-            String sound = "";
-            if (code.startsWith("A")) {
-                sound = "\nCrunch Crunch, Yum!";
-            } else if (code.startsWith("B")) {
-                sound = "\nMunch Munch, Yum!";
-            } else if (code.startsWith("C")) {
-                sound = "\nGlug Glug, Yum!";
-            } else if (code.startsWith("D")) {
-                sound = "\nChew Chew, Yum!";
-            }
-            return sound;
-        }
-        public Map<String, Item> getInventory () {
-            return inventory;
-        }
 
-        public void setInventory (Map < String, Item > inventory){
-            this.inventory = inventory;
+    public String vendSound(String code) {
+        String sound = "";
+        if (code.startsWith("A")) {
+            sound = "\nCrunch Crunch, Yum!";
+        } else if (code.startsWith("B")) {
+            sound = "\nMunch Munch, Yum!";
+        } else if (code.startsWith("C")) {
+            sound = "\nGlug Glug, Yum!";
+        } else if (code.startsWith("D")) {
+            sound = "\nChew Chew, Yum!";
         }
+        return sound;
     }
+
+    public static Map<String, Item> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Map<String, Item> inventory) {
+        this.inventory = inventory;
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

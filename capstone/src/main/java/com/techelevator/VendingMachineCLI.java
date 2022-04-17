@@ -14,7 +14,8 @@ public class VendingMachineCLI {
 	private static final String FEED_MONEY = "Feed Money";
 	private static final String SELECT_PRODUCT = "Select Product";
 	private static final String FINISH_TRANSACTION = "Finish Transaction";
-	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_EXIT };
+	private static final String SECRET_LOG = "";
+	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_EXIT,SECRET_LOG };
 	private static final String[] PROSES_MENU_OPTIONS = {FEED_MONEY,SELECT_PRODUCT,FINISH_TRANSACTION };
 
 	private Menu menu;
@@ -42,35 +43,34 @@ public class VendingMachineCLI {
 
 						BigDecimal moneyFed = vendWallet.feedMoney();
 						//logs FEED MONEY, amount of money added, total balance.
-						if ((moneyFed.doubleValue() > 0)) {
-							sales.log("FEED MONEY:", moneyFed, VendWallet.getBalance());
-						}
+						sales.log("FEED MONEY:", moneyFed, VendWallet.getBalance());
+
 					} else if (prosesChoice.equals(FINISH_TRANSACTION)){
 						BigDecimal vwBalance = VendWallet.getBalance();
 						vendWallet.balanceToZero(VendWallet.getBalance());
-                        //logs GIVE CHANGE, balance before change, balance after change is given.
-						if ((vwBalance.doubleValue() > 0)){
-							sales.log("GIVE CHANGE:", vwBalance, VendWallet.getBalance());
-						}
+						//logs GIVE CHANGE, balance before change, balance after change is given.
+						sales.log("GIVE CHANGE:", vwBalance, VendWallet.getBalance());
 						break;
 					} else if (prosesChoice.equals(SELECT_PRODUCT)){
 						inventory.printItems();
-						System.out.println("\nPlease enter in the item you would like");
+						System.out.println("Please enter in the item you would like");
 						Scanner input = new Scanner(System.in);
 						String inputKey = input.nextLine().toUpperCase();
 						BigDecimal vwBalance = VendWallet.getBalance();
 						inventory.vendItem(inputKey);
 
-						//logs item name, balance before purchase, balance after purchase
 						sales.log(inventory.getInventory().get(inputKey).getName(), vwBalance , VendWallet.getBalance());
 
 					}
 				}
 
 			}else if (choice.equals(MAIN_MENU_EXIT)) {
-				System.out.println("\nHave a nice day!");
+				System.out.println("Have a nice day!");
 				break;
 
+			} else if (choice.equals(SECRET_LOG)){
+				sales.salesReportOut();
+				System.out.println("Sales report printed!");
 			}
 		}
 	}
