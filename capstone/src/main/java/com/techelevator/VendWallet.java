@@ -8,20 +8,21 @@ public class VendWallet {
     static BigDecimal balance = new BigDecimal(0).setScale(2, RoundingMode.HALF_DOWN);
 
     public BigDecimal feedMoney() {
-        BigDecimal previousBalance = getBalance();
-        try {
-            System.out.println("Please feed in whole dollar amounts! example, $1, $2, $5, or $10.");
-            Scanner input = new Scanner(System.in);
-            double num = Double.parseDouble(input.nextLine());
-            if (num % 1 == 0) {
-                setBalance(balance.add(BigDecimal.valueOf(num)));
-            } else {
-                System.out.println("Invalid entry please put in whole dolor amount!");
-            }
-        } catch (Exception e){
-            System.out.println("Invalid input!");
+        System.out.println("\nPlease feed in whole dollar amounts! Example: $1, $2, $5, or $10.");
+        Scanner input = new Scanner(System.in);
+        while (!input.hasNextDouble()) {
+            System.out.println("\nInvalid entry please insert whole dollar amount");
         }
-        return previousBalance;
+        double num = Double.parseDouble(input.nextLine());
+        if (num % 1 == 0 && num > 0) {
+            setBalance(balance.add(BigDecimal.valueOf(num)));
+            return BigDecimal.valueOf(num).setScale(2);
+        }
+        else {
+            System.out.println("\nInvalid entry please insert whole dollar amount");
+        }
+        // Log required a null return for the method
+        return BigDecimal.valueOf(0).setScale(2);
     }
     public void balanceToZero(BigDecimal amount) {
         double convert = amount.doubleValue() * 100;
@@ -31,15 +32,14 @@ public class VendWallet {
         int tempAmount2 = tempAmount % 10;
         int nickles = tempAmount2 / 5;
         int tempAmount3 = tempAmount2 % 5;
-        setBalance(BigDecimal.valueOf((double) tempAmount3).setScale(2, RoundingMode.HALF_DOWN));
+        setBalance(BigDecimal.valueOf((double)tempAmount3).setScale(2, RoundingMode.HALF_DOWN));
 
-        System.out.println("Transaction completed you receive your balance of " +
-                amount + " Quarters dispensed " + quarters +
-                " Dimes dispensed " + dimes + "Nickles dispensed " + nickles);
-
+        System.out.println("\nTransaction completed your change is $" +
+                amount + "\nQuarters Dispensed: " + quarters +
+                "\nDimes Dispensed: " + dimes + "\nNickles Dispensed: " + nickles);
     }
-    public void updateBalance(){
 
+    public void updateBalance(){
     }
 
     public void setBalance(BigDecimal balance) {
