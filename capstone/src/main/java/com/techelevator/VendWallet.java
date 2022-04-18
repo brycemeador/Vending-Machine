@@ -7,23 +7,29 @@ import java.util.Scanner;
 public class VendWallet {
     static BigDecimal balance = new BigDecimal(0).setScale(2, RoundingMode.HALF_DOWN);
 
+    //converted feedMoney into 2 methods, feedMoney and updateBalance. Couldn't find out how to test feedMoney due to
+    //no parameters
     public BigDecimal feedMoney() {
-        System.out.println("\nPlease feed in whole dollar amounts! Example: $1, $2, $5, or $10.");
+        System.out.println("\nPlease feed in whole dollar amounts! Examples: $1, $2, $5, or $10.");
         Scanner input = new Scanner(System.in);
         while (!input.hasNextDouble()) {
             System.out.println("\nInvalid entry please insert whole dollar amount");
+            input = new Scanner(System.in);
         }
         double num = Double.parseDouble(input.nextLine());
+        return BigDecimal.valueOf(updateBalance(num)).setScale(2);
+
+    }
+    public double updateBalance(Double num){
         if (num % 1 == 0 && num > 0) {
             setBalance(balance.add(BigDecimal.valueOf(num)));
-            return BigDecimal.valueOf(num).setScale(2);
-        }
-        else {
+            return num;
+        } else {
             System.out.println("\nInvalid entry please insert whole dollar amount");
+            return 0;
         }
-        // Log required a null return for the method
-        return BigDecimal.valueOf(0).setScale(2);
     }
+
     public void balanceToZero(BigDecimal amount) {
         double convert = amount.doubleValue() * 100;
         int quarters = (int) (convert / 25);
@@ -37,9 +43,6 @@ public class VendWallet {
         System.out.println("\nTransaction completed your change is $" +
                 amount + "\nQuarters Dispensed: " + quarters +
                 "\nDimes Dispensed: " + dimes + "\nNickles Dispensed: " + nickles);
-    }
-
-    public void updateBalance(){
     }
 
     public void setBalance(BigDecimal balance) {

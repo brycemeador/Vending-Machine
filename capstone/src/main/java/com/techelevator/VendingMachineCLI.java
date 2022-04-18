@@ -42,14 +42,19 @@ public class VendingMachineCLI {
 					if (prosesChoice.equals(FEED_MONEY)) {
 
 						BigDecimal moneyFed = vendWallet.feedMoney();
-						//logs FEED MONEY, amount of money added, total balance.
-						sales.log("FEED MONEY:", moneyFed, VendWallet.getBalance());
 
+						//added if to make sure log only documents when needed
+						if ((moneyFed.doubleValue() > 0)) {
+							sales.log("FEED MONEY:", moneyFed, VendWallet.getBalance());
+						}
 					} else if (prosesChoice.equals(FINISH_TRANSACTION)){
 						BigDecimal vwBalance = VendWallet.getBalance();
 						vendWallet.balanceToZero(VendWallet.getBalance());
-						//logs GIVE CHANGE, balance before change, balance after change is given.
-						sales.log("GIVE CHANGE:", vwBalance, VendWallet.getBalance());
+
+						//added if to make sure log only documents when needed
+						if ((vwBalance.doubleValue() > 0)){
+							sales.log("GIVE CHANGE:", vwBalance, VendWallet.getBalance());
+						}
 						break;
 					} else if (prosesChoice.equals(SELECT_PRODUCT)){
 						inventory.printItems();
@@ -59,18 +64,22 @@ public class VendingMachineCLI {
 						BigDecimal vwBalance = VendWallet.getBalance();
 						inventory.vendItem(inputKey);
 
-						sales.log(inventory.getInventory().get(inputKey).getName(), vwBalance , VendWallet.getBalance());
-
+						//if needed to avoid nullpointerexception
+						if(Inventory.getInventory().containsKey(inputKey)){
+							sales.log(inventory.getInventory().get(inputKey).getName(), vwBalance , VendWallet.getBalance());
+						}
 					}
 				}
 
 			}else if (choice.equals(MAIN_MENU_EXIT)) {
-				System.out.println("Have a nice day!");
+				//added \n for looks
+				System.out.println("\nHave a nice day!");
 				break;
 
 			} else if (choice.equals(SECRET_LOG)){
 				sales.salesReportOut();
-				System.out.println("Sales report printed!");
+				//added \n for looks
+				System.out.println("\nSales report printed!");
 			}
 		}
 	}

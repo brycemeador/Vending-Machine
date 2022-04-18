@@ -1,18 +1,18 @@
 package com.techelevator;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+class InventoryTest {
 
-class PrintInventoryTest {
+    //Merged all the inventory test into a single test class
+
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
@@ -80,5 +80,51 @@ class PrintInventoryTest {
 
 
 
+    }
+
+    @Test
+    void vendItemExists() {
+        VendWallet vendWallet = new VendWallet();
+        Inventory inventory = new Inventory();
+        inventory.loadInventory();
+        BigDecimal balance = new BigDecimal("5.00");
+        vendWallet.setBalance(balance);
+        inventory.vendItem("A1");
+        BigDecimal expBal = new BigDecimal("1.95");
+
+        Assert.assertEquals(4,Inventory.getInventory().get("A1").getQuantity());
+        Assert.assertEquals("Crunch Crunch, Yum!",expBal.doubleValue(), VendWallet.getBalance().doubleValue(),0.00);
+    }
+
+    @Test
+    void vendItemDoesNotExist() {
+        VendWallet vendWallet = new VendWallet();
+        Inventory inventory = new Inventory();
+        inventory.loadInventory();
+        vendWallet.setBalance(BigDecimal.valueOf(5.00));
+        inventory.vendItem("Z1");
+        BigDecimal balance = new BigDecimal("5.00");
+        String invalid = "Invalid item code!";
+        Assert.assertEquals("Invalid item code!",balance ,VendWallet.getBalance() );
+    }
+
+    @Test
+    public void testFirstItemPrice() {
+        Inventory inventory = new Inventory();
+        inventory.loadInventory();
+        Map<String, Item> testInventory = Inventory.getInventory();
+        Double testPrice = testInventory.get("A1").getPrice().doubleValue();
+        Double expPrice = 3.05;
+        Assert.assertEquals(expPrice, testPrice);
+    }
+
+    @Test
+    public void testLastItemName() {
+        Inventory inventory = new Inventory();
+        inventory.loadInventory();
+        Map<String, Item> testInventory = Inventory.getInventory();
+        String testName = testInventory.get("D4").getName();
+        String expName = "Triplemint";
+        Assert.assertEquals(expName, testName);
     }
 }
