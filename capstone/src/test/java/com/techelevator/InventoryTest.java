@@ -17,32 +17,31 @@ class InventoryTest {
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @BeforeEach
-    public void setUp() {
-        System.setOut(new PrintStream(outputStreamCaptor));
-    }
+    public void setUp() {System.setOut(new PrintStream(outputStreamCaptor));}
+
 
     @Test
     void printItemsTest() {
-        Inventory inventory = new Inventory();
+    Inventory inventory = new Inventory();
         inventory.loadInventory();
         inventory.printItems();
         String items = outputStreamCaptor.toString().trim();
-        String itemsEquals = "A1 Potato Crisps 3.05      5 Avalible\r\n" +
-                "A2 Stackers 1.45           5 Avalible\r\n" +
-                "A3 Grain Waves 2.75        5 Avalible\r\n" +
-                "A4 Cloud Popcorn 3.65      5 Avalible\r\n" +
-                "B1 Moonpie 1.80            5 Avalible\r\n" +
-                "B2 Cowtales 1.50           5 Avalible\r\n" +
-                "B3 Wonka Bar 1.50          5 Avalible\r\n" +
-                "B4 Crunchie 1.75           5 Avalible\r\n" +
-                "C1 Cola 1.25               5 Avalible\r\n" +
-                "C2 Dr. Salt 1.50           5 Avalible\r\n" +
-                "C3 Mountain Melter 1.50    5 Avalible\r\n" +
-                "C4 Heavy 1.50              5 Avalible\r\n" +
-                "D1 U-Chews 0.85            5 Avalible\r\n" +
-                "D2 Little League Chew 0.95 5 Avalible\r\n" +
-                "D3 Chiclets 0.75           5 Avalible\r\n" +
-                "D4 Triplemint 0.75         5 Avalible";
+        String itemsEquals ="A1 Potato Crisps 3.05      5 Available\r\n" +
+                "A2 Stackers 1.45           5 Available\r\n" +
+                "A3 Grain Waves 2.75        5 Available\r\n" +
+                "A4 Cloud Popcorn 3.65      5 Available\r\n" +
+                "B1 Moonpie 1.80            5 Available\r\n" +
+                "B2 Cowtales 1.50           5 Available\r\n" +
+                "B3 Wonka Bar 1.50          5 Available\r\n" +
+                "B4 Crunchie 1.75           5 Available\r\n" +
+                "C1 Cola 1.25               5 Available\r\n" +
+                "C2 Dr. Salt 1.50           5 Available\r\n" +
+                "C3 Mountain Melter 1.50    5 Available\r\n" +
+                "C4 Heavy 1.50              5 Available\r\n" +
+                "D1 U-Chews 0.85            5 Available\r\n" +
+                "D2 Little League Chew 0.95 5 Available\r\n" +
+                "D3 Chiclets 0.75           5 Available\r\n" +
+                "D4 Triplemint 0.75         5 Available";
         Assert.assertTrue(itemsEquals.equals(items));
 
             System.setOut(standardOut);
@@ -51,7 +50,6 @@ class InventoryTest {
     void printItemsSoldOutTest(){
         Inventory inventory = new Inventory();
         inventory.loadInventory();
-
         for(Map.Entry<String, Item> entry : Inventory.getInventory().entrySet()){
             entry.getValue().setQuantity(0);
         }
@@ -77,9 +75,6 @@ class InventoryTest {
         Assert.assertTrue(itemsEquals.equals(items));
 
             System.setOut(standardOut);
-
-
-
     }
 
     @Test

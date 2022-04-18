@@ -41,6 +41,8 @@ public class VendingMachineCLI {
 					String prosesChoice = (String) menu.getChoiceFromOptionsWithBalance(PROSES_MENU_OPTIONS);
 					if (prosesChoice.equals(FEED_MONEY)) {
 
+
+
 						BigDecimal moneyFed = vendWallet.feedMoney();
 
 						//added if to make sure log only documents when needed
