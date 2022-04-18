@@ -19,3 +19,24 @@ SALES REPORT AS OF 04/16/2022 09:21:52 PM
 >'''
 **TOTAL SALES**
 $10.45
+SALES REPORT AS OF 04/17/2022 01:17:23 PM
+>'''
+>Potato Crisps|0
+>Stackers|0
+>Grain Waves|0
+>Cloud Popcorn|0
+>Moonpie|0
+>Cowtales|0
+>Wonka Bar|0
+>Crunchie|0
+>Cola|0
+>Dr. Salt|0
+>Mountain Melter|0
+>Heavy|0
+>U-Chews|0
+>Little League Chew|0
+>Chiclets|0
+>Triplemint|0
+>'''
+**TOTAL SALES**
+$0.0

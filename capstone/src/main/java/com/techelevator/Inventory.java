@@ -52,7 +52,7 @@ public class Inventory {
                 );
             } else {
                 System.out.println(entry.getKey().toString() + " " +
-                        entry.getValue().getName().toString() + spacing.toString() +
+                        entry.getValue().getName().toString() +
                         entry.getValue().getPrice() + spacing.toString() +
                         "SOLD OUT"
                 );

@@ -7,10 +7,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SalesLog {
 
@@ -19,7 +16,7 @@ public class SalesLog {
     String action = null;
     BigDecimal transactionBalance = null;
     BigDecimal machineBalance = null;
-    File salesLog = new File("Sales Report.txt");
+
 
     public void log(String action, BigDecimal transactionBalance, BigDecimal machineBalance) throws IOException {
         salesReport.createNewFile();
@@ -38,18 +35,16 @@ public class SalesLog {
         }
     }
     public void salesReportOut() throws IOException {
-        salesLog.createNewFile();
         Calendar date = Calendar.getInstance();
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+        DateFormat dfReport = new SimpleDateFormat("MM_dd_yyyy hh_mm_ss a");
+        File salesLog = new File(dfReport.format(date.getTime()) + " Sales Report.txt");
+        salesLog.createNewFile();
 
         int amountSold = 0;
         double totalValSold = 0;
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(salesLog, true))) {
-            if (!salesLog.exists()) {
-                salesLog.createNewFile();
-            }
-            writer.println("SALES REPORT AS OF " + df.format(date.getTime()) + "\n" + ">'''");
+            writer.println(">'''");
             for (Map.Entry<String, Item> entry : Inventory.getInventory().entrySet()) {
                 amountSold = 5 - entry.getValue().getQuantity();
                 totalValSold = totalValSold + entry.getValue().getPrice().doubleValue() * amountSold;

@@ -45,14 +45,15 @@ public class Menu {
 
 	private void displayMenuOptions(Object[] options) {
 		out.println();
-		for (int i = 0; i < options.length - 1; i++) {
+		for (int i = 0; i < options.length; i++) {
 			int optionNum = i + 1;
-			out.println(optionNum + ") " + options[i]);
+			if (optionNum != 4) {
+				out.println(optionNum + ") " + options[i]);
+			}
 		}
 		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 	}
-
 
 	public Object getChoiceFromOptionsWithBalance(Object[] options) {
 // custom method for purchase screen
