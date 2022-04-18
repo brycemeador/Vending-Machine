@@ -13,9 +13,9 @@ public class SalesLog {
 
     File salesReport = new File("Sales Log.txt");
     DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
-    String action = null;
-    BigDecimal transactionBalance = null;
-    BigDecimal machineBalance = null;
+    String action;
+    BigDecimal transactionBalance;
+    BigDecimal machineBalance;
 
 
     public void log(String action, BigDecimal transactionBalance, BigDecimal machineBalance) throws IOException {
@@ -30,7 +30,8 @@ public class SalesLog {
             if (!salesReport.exists()) {
                 salesReport.createNewFile();
             }
-            writer.println(df.format(date.getTime()) + " " + action + " $" + transactionBalance + " $" + machineBalance + "\n");
+            //removed \n at the end to correctly match format from readMe
+            writer.println(df.format(date.getTime()) + " " + action + " $" + transactionBalance + " $" + machineBalance);
             writer.close();
         }
     }

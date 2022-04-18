@@ -48,7 +48,8 @@ public class Inventory {
                 System.out.println(entry.getKey().toString() + " " +
                         entry.getValue().getName().toString() + " " +
                         entry.getValue().getPrice() + spacing.toString() +
-                        entry.getValue().getQuantity() + " Avalible"
+                        entry.getValue().getQuantity() + " Available"
+                        //corrected typo
                 );
             } else {
                 System.out.println(entry.getKey().toString() + " " +
