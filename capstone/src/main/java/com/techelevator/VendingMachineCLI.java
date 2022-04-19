@@ -41,8 +41,6 @@ public class VendingMachineCLI {
 					String prosesChoice = (String) menu.getChoiceFromOptionsWithBalance(PROSES_MENU_OPTIONS);
 					if (prosesChoice.equals(FEED_MONEY)) {
 
-
-
 						BigDecimal moneyFed = vendWallet.feedMoney();
 
 						//added if to make sure log only documents when needed
@@ -65,11 +63,14 @@ public class VendingMachineCLI {
 						String inputKey = input.nextLine().toUpperCase();
 						BigDecimal vwBalance = VendWallet.getBalance();
 						inventory.vendItem(inputKey);
+						inventory.getInventory().get(inputKey).getQuantity();
 
-						//if needed to avoid nullpointerexception
-						if(Inventory.getInventory().containsKey(inputKey)){
+						//if needed to avoid nullpointerexception and only log when item is available
+						if(Inventory.getInventory().containsKey(inputKey)
+								&& inventory.getInventory().get(inputKey).getQuantity() > 0){
 							sales.log(inventory.getInventory().get(inputKey).getName(), vwBalance , VendWallet.getBalance());
 						}
+
 					}
 				}
 

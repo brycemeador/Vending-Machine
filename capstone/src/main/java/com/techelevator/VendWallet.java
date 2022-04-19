@@ -20,7 +20,8 @@ public class VendWallet {
         return BigDecimal.valueOf(updateBalance(num)).setScale(2);
 
     }
-    public double updateBalance(Double num){
+
+        public double updateBalance(Double num){
         if (num % 1 == 0 && num > 0) {
             setBalance(balance.add(BigDecimal.valueOf(num)));
             return num;
