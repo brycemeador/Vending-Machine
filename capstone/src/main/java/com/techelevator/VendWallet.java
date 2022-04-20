@@ -9,7 +9,9 @@ public class VendWallet {
 
     //converted feedMoney into 2 methods, feedMoney and updateBalance. Couldn't find out how to test feedMoney due to
     //no parameters
+    // This method takes in money with scanner and calls update balance.
     public BigDecimal feedMoney() {
+
         System.out.println("\nPlease feed in whole dollar amounts! Examples: $1, $2, $5, or $10.");
         Scanner input = new Scanner(System.in);
         while (!input.hasNextDouble()) {
@@ -18,10 +20,8 @@ public class VendWallet {
         }
         double num = Double.parseDouble(input.nextLine());
         return BigDecimal.valueOf(updateBalance(num)).setScale(2);
-
     }
-
-        public double updateBalance(Double num){
+    public double updateBalance(Double num){
         if (num % 1 == 0 && num > 0) {
             setBalance(balance.add(BigDecimal.valueOf(num)));
             return num;
@@ -30,7 +30,7 @@ public class VendWallet {
             return 0;
         }
     }
-
+    // Cashes out balance by taking the balance and returning the fewest coins possible.
     public void balanceToZero(BigDecimal amount) {
         double convert = amount.doubleValue() * 100;
         int quarters = (int) (convert / 25);

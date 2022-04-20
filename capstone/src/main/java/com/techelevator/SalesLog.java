@@ -17,7 +17,7 @@ public class SalesLog {
     BigDecimal transactionBalance;
     BigDecimal machineBalance;
 
-
+    // creates salesLog and then prints the action and balances
     public void log(String action, BigDecimal transactionBalance, BigDecimal machineBalance) throws IOException {
         salesReport.createNewFile();
         Calendar date = Calendar.getInstance();
@@ -35,6 +35,8 @@ public class SalesLog {
             writer.close();
         }
     }
+    // when sales report is requested it prints a file with date and time
+    // prints the inventory and the amount of items bought in a given session and the total amount.
     public void salesReportOut() throws IOException {
         Calendar date = Calendar.getInstance();
         DateFormat dfReport = new SimpleDateFormat("MM_dd_yyyy hh_mm_ss a");
@@ -56,5 +58,4 @@ public class SalesLog {
         }
     }
 }
-
 

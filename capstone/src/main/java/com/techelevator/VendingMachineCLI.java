@@ -37,40 +37,44 @@ public class VendingMachineCLI {
 				inventory.printItems();
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
-				while (true) {
+				first:	while (true) {
 					String prosesChoice = (String) menu.getChoiceFromOptionsWithBalance(PROSES_MENU_OPTIONS);
 					if (prosesChoice.equals(FEED_MONEY)) {
 
 						BigDecimal moneyFed = vendWallet.feedMoney();
 
-						//added if to make sure log only documents when needed
+						// added if to make sure log only documents when needed
 						if ((moneyFed.doubleValue() > 0)) {
 							sales.log("FEED MONEY:", moneyFed, VendWallet.getBalance());
 						}
-					} else if (prosesChoice.equals(FINISH_TRANSACTION)){
+					} else if (prosesChoice.equals(FINISH_TRANSACTION)) {
 						BigDecimal vwBalance = VendWallet.getBalance();
 						vendWallet.balanceToZero(VendWallet.getBalance());
 
 						//added if to make sure log only documents when needed
-						if ((vwBalance.doubleValue() > 0)){
+						if ((vwBalance.doubleValue() > 0)) {
 							sales.log("GIVE CHANGE:", vwBalance, VendWallet.getBalance());
 						}
 						break;
-					} else if (prosesChoice.equals(SELECT_PRODUCT)){
+					} else if (prosesChoice.equals(SELECT_PRODUCT)) {
 						inventory.printItems();
 						System.out.println("Please enter in the item you would like");
 						Scanner input = new Scanner(System.in);
 						String inputKey = input.nextLine().toUpperCase();
 						BigDecimal vwBalance = VendWallet.getBalance();
+						if (!Inventory.getInventory().containsKey(inputKey)){
+							System.out.println("\nInvalid item code!");
+							continue first;
+						}
 						inventory.vendItem(inputKey);
+
 						inventory.getInventory().get(inputKey).getQuantity();
 
 						//if needed to avoid nullpointerexception and only log when item is available
-						if(Inventory.getInventory().containsKey(inputKey)
-								&& inventory.getInventory().get(inputKey).getQuantity() > 0){
-							sales.log(inventory.getInventory().get(inputKey).getName(), vwBalance , VendWallet.getBalance());
+						if (Inventory.getInventory().containsKey(inputKey)
+								&& inventory.getInventory().get(inputKey).getQuantity() > 0) {
+							sales.log(inventory.getInventory().get(inputKey).getName(), vwBalance, VendWallet.getBalance());
 						}
-
 					}
 				}
 

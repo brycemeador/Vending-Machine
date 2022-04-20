@@ -9,8 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Inventory {
+    // Linked hash map used to keep order of input
     static Map<String, Item> inventory = new LinkedHashMap<String, Item>();
 
+    // takes in file and parses the file in to hash map
     public void loadInventory() {
         String fileName = "vendingmachine.csv";
         File file = new File(fileName);
@@ -26,7 +28,9 @@ public class Inventory {
             System.out.println("File does not exists");
         }
     }
-
+    // First loop goes through a finds the largest string.
+    // Second loop compares the current entry length and longest to figure out
+    // how many spaces to add on and then prints each item amount or if it is sold out.
     public String printItems() {
         int length = 0;
         int largestSpaceLength = 0;
@@ -46,9 +50,9 @@ public class Inventory {
             }
             if (entry.getValue().getQuantity() > 0) {
                 System.out.println(entry.getKey().toString() + " " +
-                        entry.getValue().getName().toString() + " " +
-                        entry.getValue().getPrice() + spacing.toString() +
-                        entry.getValue().getQuantity() + " Available"
+                                entry.getValue().getName().toString() + " " +
+                                entry.getValue().getPrice() + spacing.toString() +
+                                entry.getValue().getQuantity() + " Available"
                         //corrected typo
                 );
             } else {
@@ -61,10 +65,11 @@ public class Inventory {
         }
         return "";
     }
-
-    public String vendItem(String inputKey) {
+    // Takes input key and deducts from balance and inventory then calls vend sound to print out items sound
+    public void vendItem(String inputKey) {
         try {
             while (true) {
+
                 VendWallet wallet = new VendWallet();
                 SalesLog sales = new SalesLog();
                 if (inventory.containsKey(inputKey) && VendWallet.getBalance().doubleValue() >
@@ -85,12 +90,12 @@ public class Inventory {
                     break;
                 }
             }
-        } catch (Exception e) {
+        }catch(NullPointerException e){
             System.out.println("Invalid item code!");
         }
-        return "";
     }
 
+    // This method is called by vendItem to make items sound.
     public String vendSound(String code) {
         String sound = "";
         if (code.startsWith("A")) {
@@ -115,12 +120,6 @@ public class Inventory {
 
 
 }
-
-
-
-
-
-
 
 
 
